@@ -1,0 +1,10 @@
+#pip install -r requirements.txt
+#Python==2.7.15
+
+
+install_requires=[
+    'Python==2.7',
+    'pyserial==3.4',
+    'readline==7.0',
+    'tk==8.6.8'],
+}
