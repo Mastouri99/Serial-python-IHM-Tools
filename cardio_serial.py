@@ -15,7 +15,7 @@ from tkinter import scrolledtext ,Canvas, Frame, BOTH
 
 
 serial_data = ''
-filter_data = ''
+serial_data = ''
 update_period = 5000
 serial_object = None
 gui = Tk()
@@ -59,22 +59,48 @@ def connect():
 def get_data():
 
     global serial_object
-    global filter_data
+    global serial_data
     global file
 
     file = open("logiap1.txt", "w")
     while(1):
         try:
-            filter_data = ''
-            filter_data = serial_object.readline()
-            print filter_data
-            if filter_data:
-                q.put(filter_data)
+            serial_data = ''
+            serial_data = serial_object.readline()
+            print serial_data
+            if serial_data:
+                q.put(serial_data)
                 #q.join()
-                if '[IAP]' in filter_data :
-                    iap_text.insert(END, filter_data)
+                if '[IAP]>' in serial_data :
+                    serial_data = serial_data.replace('[IAP]>', '')
+                    #serial_data.lstrip('[IAP]>')
+                    if ('Error' in serial_data)or('error' in serial_data)or('Erreur' in serial_data)or('erreur' in serial_data)or('ERROR' in serial_data)or('ERREUR' in serial_data):
+                        iap_text.insert(END, serial_data,'warning')
+                    else :
+                        iap_text.insert(END, serial_data)
                     iap_text.insert(END,"\n")
                     iap_text.yview_pickplace("end")
+
+                if '[APP]>' in serial_data :
+                    serial_data = serial_data.replace('[APP]>', '')
+                    #serial_data.lstrip('[APP]>')
+                    if ('Error' in serial_data)or('error' in serial_data)or('Erreur' in serial_data)or('erreur' in serial_data)or('ERROR' in serial_data)or('ERREUR' in serial_data):
+                        app_text.insert(END, serial_data,'warning')
+                    else :
+                        app_text.insert(END, serial_data)
+                    app_text.insert(END,"\n")
+                    app_text.yview_pickplace("end")
+
+                if '[BOOT]>' in serial_data :
+                    serial_data = serial_data.replace('[BOOT]>', '')
+                    #serial_data.lstrip('[BOOT]>')
+                    if ('Error' in serial_data)or('error' in serial_data)or('Erreur' in serial_data)or('erreur' in serial_data)or('ERROR' in serial_data)or('ERREUR' in serial_data):
+                        boot_text.insert(END, serial_data,'warning')
+                    else :
+                        boot_text.insert(END, serial_data)
+                    boot_text.insert(END,"\n")
+                    boot_text.yview_pickplace("end")
+
 
 
         except TypeError:
@@ -85,12 +111,12 @@ def get_data():
 
 def update_gui():
 
-    global filter_data
+    global serial_data
     global update_period
     global file
     #time.sleep(10)
     w.itemconfig(app_rect, fill='white')
-    file = open("logiap1.txt", "w")
+    file = open("CCW Full Log.txt", "w")
     while(1):
         try:
             item = q.get()
@@ -202,6 +228,10 @@ if __name__ == "__main__":
     boot_text = scrolledtext.ScrolledText(gui,width=57,height=35)
     boot_text.grid(column=0,row=0)
     boot_text.place(x = 446, y = 10)
+
+    iap_text.tag_config('warning', background="yellow", foreground="red")
+    app_text.tag_config('warning', background="yellow", foreground="red")
+    boot_text.tag_config('warning', background="yellow", foreground="red")
     #threads
     q = Queue.Queue()
     t2 = threading.Thread(target = update_gui)
@@ -279,9 +309,7 @@ if __name__ == "__main__":
     clear_all.pack()
     clear_all.place(x = 733, y = 565)
     #mainloop
-    # master = Tk()
-    # w = Spinbox(master, from_ = 0, to = 10)
-    # w.pack()
+
 
 
     gui.geometry('1366x768')
