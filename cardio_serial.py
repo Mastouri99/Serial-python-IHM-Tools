@@ -11,6 +11,19 @@ import ttk
 from Tkinter import *
 import serial
 from tkinter import scrolledtext ,Canvas, Frame, BOTH
+import datetime
+import os
+path = os.getcwd()+'/Cardio Device History Log/'+'CCW-'+str(datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
+#path = os.getcwd()
+Enable_dgb = 'NO'
+
+__all_dbg = 'NO'
+__error_dbg = 'NO'
+__iap_dbg = 'NO'
+__app_dbg = 'NO'
+__boot_dbg = 'NO'
+# define the access rights
+access_rights = 0o755
 
 
 
@@ -29,14 +42,48 @@ gui.configure(bg='#102027')
 def connect():
 
     version_ = button_var.get()
+    check_log = button_enable_debug.get()
+    ALL_DBG  = all_debug.get()
+    ERR_DBG  = only_errors.get()
+    BOOT_DBG = boot_logging.get()
+    IAP_DBG = iap_logging.get()
+    APP_DBG = app_logging.get()
+
     print version_
     global serial_object
+
+    global Enable_dgb
+    global __all_dbg
+    global __error_dbg
+    global __iap_dbg
+    global __app_dbg
+    global __boot_dbg
+
     port = port_entry.get()
     baud = baud_entry.get()
 
 
 
     try:
+        if(check_log == 4 ):
+                Enable_dgb = 'YES'
+                if (ALL_DBG == 1):
+                    __all_dbg = 'YES'
+                if (ERR_DBG == 1):
+                    __error_dbg = 'YES'
+                if (BOOT_DBG == 1):
+                    __boot_dbg = 'YES'
+                if (IAP_DBG == 1):
+                    __iap_dbg = 'YES'
+                if (APP_DBG == 1):
+                    __app_dbg = 'YES'
+
+                t2 = threading.Thread(target = update_gui)
+                t2.daemon = True
+                t2.start()
+
+
+
         if (version_ == 2)or(version_ == 3):
             try:
                 serial_object = serial.Serial('/dev/tty' + str(port), baud,parity=serial.PARITY_NONE,stopbits=serial.STOPBITS_ONE,bytesize=serial.EIGHTBITS,timeout=400)
@@ -60,25 +107,25 @@ def get_data():
 
     global serial_object
     global serial_data
-    global file
-
-    file = open("logiap1.txt", "w")
+    global Enable_dgb
     while(1):
         try:
             serial_data = ''
             serial_data = serial_object.readline()
             print serial_data
             if serial_data:
-                q.put(serial_data)
+                if (Enable_dgb == 'YES'):
+                    q.put(serial_data)
                 #q.join()
                 if '[IAP]>' in serial_data :
                     serial_data = serial_data.replace('[IAP]>', '')
                     #serial_data.lstrip('[IAP]>')
                     if ('Error' in serial_data)or('error' in serial_data)or('Erreur' in serial_data)or('erreur' in serial_data)or('ERROR' in serial_data)or('ERREUR' in serial_data):
                         iap_text.insert(END, serial_data,'warning')
+                        #qq.put(serial_data)
                     else :
                         iap_text.insert(END, serial_data)
-                    iap_text.insert(END,"\n")
+                    #iap_text.insert(END,"\n")
                     iap_text.yview_pickplace("end")
 
                 if '[APP]>' in serial_data :
@@ -88,7 +135,7 @@ def get_data():
                         app_text.insert(END, serial_data,'warning')
                     else :
                         app_text.insert(END, serial_data)
-                    app_text.insert(END,"\n")
+                    #app_text.insert(END,"\n")
                     app_text.yview_pickplace("end")
 
                 if '[BOOT]>' in serial_data :
@@ -98,7 +145,7 @@ def get_data():
                         boot_text.insert(END, serial_data,'warning')
                     else :
                         boot_text.insert(END, serial_data)
-                    boot_text.insert(END,"\n")
+                    #boot_text.insert(END,"\n")
                     boot_text.yview_pickplace("end")
 
 
@@ -113,18 +160,63 @@ def update_gui():
 
     global serial_data
     global update_period
-    global file
-    #time.sleep(10)
-    w.itemconfig(app_rect, fill='white')
-    file = open("CCW Full Log.txt", "w")
+    global file_full_debug
+    global file_error_only
+    global file_iap_only
+    global file_boot_only
+    global file_app_only
+
+    global __all_dbg
+    global __error_dbg
+    global __iap_dbg
+    global __app_dbg
+    global __boot_dbg
+    w.itemconfig(app_rect, fill='green')
+    path_to_log = path
+    os.makedirs(path, access_rights)
+    if (__all_dbg == 'YES'):
+        file_full_debug = open(path_to_log +'/'+'CCW Full Log.txt', "w")
+    if (__error_dbg == 'YES'):
+        file_error_only = open(path_to_log +'/'+'CCW ERROR Log.txt', "w")
+    if (__iap_dbg == 'YES'):
+        file_iap_only = open(path_to_log +'/'+'CCW IAP Log.txt', "w")
+    if (__boot_dbg == 'YES'):
+        file_boot_only = open(path_to_log +'/'+'CCW BOOT Log.txt', "w")
+    if (__app_dbg == 'YES'):
+        file_app_only = open(path_to_log +'/'+'CCW APP Log.txt', "w")
+
     while(1):
         try:
+            item = ''
             item = q.get()
             if item :
-                file.write(item)
+                if (__all_dbg == 'YES'):
+                    file_full_debug.write(item)
+                    file_full_debug.flush()
 
-                file.flush()
+                if (__error_dbg == 'YES'):
+                    if ('Error' in item)or('error' in item)or('Erreur' in item)or('erreur' in item)or('ERROR' in item)or('ERREUR' in item):
+                        file_error_only.write(item)
+                        file_error_only.flush()
 
+                if (__iap_dbg == 'YES'):
+                    if '[IAP]>' in item :
+                        item = item.replace('[IAP]>', '')
+                        file_iap_only.write(item)
+                        file_iap_only.flush()
+
+
+                if (__app_dbg == 'YES'):
+                    if '[APP]>' in item :
+                        item = item.replace('[APP]>', '')
+                        file_app_only.write(item)
+                        file_app_only.flush()
+
+                if (__boot_dbg == 'YES'):
+                    if '[BOOT]>' in item :
+                        item = item.replace('[BOOT]>', '')
+                        file_boot_only.write(item)
+                        file_boot_only.flush()
 
         except :
             pass
@@ -141,13 +233,34 @@ def send():
 
 
 def disconnect():
-    global file
+    global file_full_debug
+    global file_error_only
+    global file_iap_only
+    global file_boot_only
+    global file_app_only
+
+    global Enable_dgb
+    global __all_dbg
+    global __error_dbg
+    global __iap_dbg
+    global __app_dbg
+    global __boot_dbg
     try:
         serial_object.close()
 
     except AttributeError:
         print "Closed without Using it -_-"
-    file.close()
+    if (Enable_dgb == 'YES'):
+        if (__all_dbg == 'YES'):
+            file_full_debug.close()
+        if (__error_dbg == 'YES'):
+            file_error_only.close()
+        if (__app_dbg == 'YES'):
+            file_app_only.close()
+        if (__iap_dbg == 'YES'):
+            file_iap_only.close()
+        if (__boot_dbg == 'YES'):
+            file_boot_only.close()
     gui.quit()
 
 def clear_all():
@@ -234,9 +347,7 @@ if __name__ == "__main__":
     boot_text.tag_config('warning', background="yellow", foreground="red")
     #threads
     q = Queue.Queue()
-    t2 = threading.Thread(target = update_gui)
-    t2.daemon = True
-    t2.start()
+
 
 
     #Labels
@@ -269,7 +380,9 @@ if __name__ == "__main__":
     radio_2 = Radiobutton(text = "Windows", variable = button_var, value = 1,bg="#808e95",relief = 'raised').place(x = 150, y = 570)
     radio_3 = Radiobutton(text = "Mac    ", variable = button_var, value = 3,bg="#808e95",relief = 'raised').place(x = 250, y = 570)
 
-    radio_4 = Radiobutton(text = "Enable Logging ", variable = button_var, value = 4,bg="#808e95",relief = 'raised').place(x = 420, y = 570)
+    button_enable_debug = IntVar()
+    radio_4 = Radiobutton(text = "Enable Logging ", variable = button_enable_debug, value = 4,bg="#808e95",relief = 'raised').place(x = 420, y = 570)
+
     all_debug = IntVar()
     Checkbutton(gui, text="All Debug", variable=all_debug,bg="#808e95",relief = 'raised').place(x = 420, y = 595)
     only_errors = IntVar()
