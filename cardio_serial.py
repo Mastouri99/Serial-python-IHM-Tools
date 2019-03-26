@@ -38,12 +38,12 @@ BaudRates = [110, 300, 600, 1200, 2400, 4800, 9600, 14400, 19200,28800, 38400,56
 serial_data = ''
 serial_object = None
 gui = Tk()
-gui.title("CARDIO DEVICE TEST")
+gui.title("CARDIO DEVICE TEST TOOLS")
 gui.configure(bg='#102027')
 dead = 'true'
 
 
-def blue_protection():
+def playing_protection():
     w.itemconfig(bootPart1_rect, fill='#4f83cc')
     gui.update()
     time.sleep(0.05)
@@ -75,12 +75,60 @@ def blue_protection():
     w.itemconfig(xfactory_rect, fill='white')
     gui.update()
 
+def rervers_txt():
+    w.itemconfig(txt1, fill='white')
+    w.itemconfig(txt2, fill='white')
+    w.itemconfig(txt3, fill='white')
+    w.itemconfig(txt4, fill='white')
+    w.itemconfig(txt5, fill='white')
+    w.itemconfig(txt6, fill='white')
+
+def protection_modeA():
+    w.itemconfig(bootPart1_rect, fill='red')
+    w.itemconfig(iap_rect, fill='red')
+    w.itemconfig(app_rect, fill='red')
+    w.itemconfig(bootPart2_rect, fill='red')
+    w.itemconfig(swap_rect, fill='#00BF32')
+    w.itemconfig(xfactory_rect, fill='#00BF32')
+    rervers_txt()
+    gui.update()
+
+
+def protection_modeB():
+    w.itemconfig(bootPart1_rect, fill='red')
+    w.itemconfig(iap_rect, fill='red')
+    w.itemconfig(app_rect, fill='#00BF32')
+    w.itemconfig(bootPart2_rect, fill='red')
+    w.itemconfig(swap_rect, fill='#00BF32')
+    w.itemconfig(xfactory_rect, fill='red')
+    rervers_txt()
+    gui.update()
+
 def shwo_connect():
     i = 0
     while i<4 :
         i +=1
-        blue_protection()
+        playing_protection()
     S4.itemconfig(s4_rect, fill='#00BF32')
+    show_id()
+
+def show_id():
+    Label(text = "       INFO  ",bg="#29434e",foreground="white").place(x = 875, y= 445)
+    Label(text = "Product    : STM32L4A6RG",bg="#29434e",foreground="white").place(x = 875, y= 460)
+    Label(text = "Flash size : 1MB",bg="#29434e",foreground="white").place(x = 875, y= 475)
+    Label(text = "RAM size   : 320 KB",bg="#29434e",foreground="white").place(x = 875, y= 490)
+    Label(text = "NB Bank    : 2",bg="#29434e",foreground="white").place(x = 875, y= 505)
+    Label(text = "NB Page    : 256 per Bank",bg="#29434e",foreground="white").place(x = 875, y= 520)
+    Label(text = "Size Page  : 2 KB",bg="#29434e",foreground="white").place(x = 875, y= 535)
+    Label(text = "CORE       : Cortex M4",bg="#29434e",foreground="white").place(x = 875, y= 550)
+    Label(text = "Over Clock : 80 MHZ",bg="#29434e",foreground="white").place(x = 875, y= 565)
+
+    Label(text = "       NOTE",bg="#29434e",foreground="white").place(x = 875, y= 590)
+    Label(text = "This is the code color of the WRP ",bg="#29434e",foreground="white").place(x = 875, y= 605)
+    Label(text = "memory protection visualisation>> ",bg="#29434e",foreground="white").place(x = 875, y= 620)
+    Label(text = "WHITE  : Device is not connected ",bg="#29434e",foreground="white").place(x = 875, y= 635)
+    Label(text = "GREEN  : WRP config Disabled",bg="#29434e",foreground="white").place(x = 875, y= 650)
+    Label(text = "RED    : WRP config Enabled",bg="#29434e",foreground="white").place(x = 875, y= 665)
 
 
 def App_status_connected():
@@ -171,9 +219,9 @@ def connect():
 
 
 def Start_debug():
-    S5.itemconfig(s5_rect, fill='#FF0000')
-    gui.update()
+
     global repeat
+    global myrepeat_2
     global dead
     global serial_object
     global serial_check
@@ -186,8 +234,6 @@ def Start_debug():
     global __scner_dbg
     global __error_display
     global senario
-    global myrepeat_2
-    check_log = button_enable_debug.get()
     ALL_DBG  = all_debug.get()
     ERR_DBG  = only_errors.get()
     BOOT_DBG = boot_logging.get()
@@ -195,8 +241,9 @@ def Start_debug():
     SCEN_DBG =Scenario_logging.get()
     APP_DBG = app_logging.get()
     senario = select_mode.get()
+    check_log = button_enable_debug.get()
     if (serial_check == 'yes'):
-        if((check_log!=4) and((SCEN_DBG==1)or(ALL_DBG==1)or(ERR_DBG==1)or(BOOT_DBG==1)or(IAP_DBG==1))or(APP_DBG==1)):
+        if((check_log!=4) and((SCEN_DBG==1)or(ALL_DBG==1)or(ERR_DBG==1)or(BOOT_DBG==1)or(IAP_DBG==1)or(APP_DBG==1))):
             tkinter.messagebox.showwarning("WARNING", "You must Enable the Debug Logging")
             return
         if((senario!=3) and (SCEN_DBG==1)):
@@ -204,7 +251,7 @@ def Start_debug():
             return
         myrepeat_2 = myrepeat_2 + 1
         if ((senario == 0) and (myrepeat_2 < 2)):
-            tkinter.messagebox.showinfo("INFORMATION", "For more customization you can select the mode of the little screen Display")
+            tkinter.messagebox.showinfo("INFORMATION", "For more options you can select the mode of the little screen Display ")
             return
 
     if (serial_check == 'yes'):
@@ -224,7 +271,7 @@ def Start_debug():
             tkinter.messagebox.showinfo("INFORMATION", "You should Learn the use case of The Scenario Test to Succeed The VR")
             __scner_dbg = 'YES'
         elif ((senario == 2)or(SCEN_DBG==1)):
-            tkinter.messagebox.showinfo("INFORMATION", "The little D")
+            tkinter.messagebox.showinfo("INFORMATION", "The little Screen is reserver for Displaying software Error")
             __error_display = 'YES'
         t3 = threading.Thread(target = scenario_thread)
         t3.daemon = True
@@ -255,7 +302,8 @@ def Start_debug():
                 tkinter.messagebox.showerror("ERROR", "You should connect to cardio device first  !!")
                 return
         if (serial_check == 'yes') :
-            S5.itemconfig(s5_rect, fill='#00BF32')
+            S5.itemconfig(s5_rect,fill="#00BF32")
+            gui.update()
             t1 = threading.Thread(target = get_data)
             t1.daemon = True
             dead = 'false'
@@ -286,6 +334,7 @@ def get_data():
                 #q.join()
                 if '[IAP]>' in serial_data :
                     IAP_status_connected()
+                    protection_modeB()
                     serial_data = serial_data.replace('[IAP]>', '')
                     #serial_data.lstrip('[IAP]>')
                     if ('Error' in serial_data)or('error' in serial_data)or('Erreur' in serial_data)or('erreur' in serial_data)or('ERROR' in serial_data)or('ERREUR' in serial_data):
@@ -298,6 +347,7 @@ def get_data():
 
                 if '[APP]>' in serial_data :
                     App_status_connected()
+                    protection_modeA()
                     serial_data = serial_data.replace('[APP]>', '')
                     #serial_data.lstrip('[APP]>')
                     if ('Error' in serial_data)or('error' in serial_data)or('Erreur' in serial_data)or('erreur' in serial_data)or('ERROR' in serial_data)or('ERREUR' in serial_data):
@@ -517,22 +567,7 @@ if __name__ == "__main__":
     w.place(x = 869, y = 436)
 
 
-    Label(text = "       INFO  ",bg="#29434e",foreground="white").place(x = 875, y= 445)
-    Label(text = "Product    : STM32L4A6RG",bg="#29434e",foreground="white").place(x = 875, y= 460)
-    Label(text = "Flash size : 1MB",bg="#29434e",foreground="white").place(x = 875, y= 475)
-    Label(text = "RAM size   : 320 KB",bg="#29434e",foreground="white").place(x = 875, y= 490)
-    Label(text = "NB Bank    : 2",bg="#29434e",foreground="white").place(x = 875, y= 505)
-    Label(text = "NB Page    : 256 per Bank",bg="#29434e",foreground="white").place(x = 875, y= 520)
-    Label(text = "Size Page  : 2 KB",bg="#29434e",foreground="white").place(x = 875, y= 535)
-    Label(text = "CORE       : Cortex M4",bg="#29434e",foreground="white").place(x = 875, y= 550)
-    Label(text = "Over Clock : 80 MHZ",bg="#29434e",foreground="white").place(x = 875, y= 565)
 
-    Label(text = "       NOTE",bg="#29434e",foreground="white").place(x = 875, y= 590)
-    Label(text = "This is the code color of the WRP ",bg="#29434e",foreground="white").place(x = 875, y= 605)
-    Label(text = "memory protection visualisation>> ",bg="#29434e",foreground="white").place(x = 875, y= 620)
-    Label(text = "WHITE  : Device is not connected ",bg="#29434e",foreground="white").place(x = 875, y= 635)
-    Label(text = "GREEN  : WRP config Disabled",bg="#29434e",foreground="white").place(x = 875, y= 650)
-    Label(text = "RED    : WRP config Enabled",bg="#29434e",foreground="white").place(x = 875, y= 665)
 
 
     bootPart1_rect = w.create_rectangle(280,240, 437.5, 270, fill='white')
@@ -543,12 +578,12 @@ if __name__ == "__main__":
     swap_rect = w.create_rectangle(280,50, 437.5, 113, fill='white')
     xfactory_rect = w.create_rectangle(280,2, 437.5, 50, fill='white')
 
-    w.create_text(308, 249.5,font=("freemono ", 11, "bold"), text = "BootloaderP1", anchor="nw", angle=0)
-    w.create_text(347, 215,font=("freemono ", 11, "bold"), text = "IAP", anchor="nw", angle=0)
-    w.create_text(312, 157,font=("freemono ", 11, "bold"), text = "Application", anchor="nw", angle=0)
-    w.create_text(308, 118,font=("freemono bold", 11, "bold"), text = "BootloaderP2", anchor="nw", angle=0)
-    w.create_text(340, 73,font=("freemono ", 11, "bold"), text = "SWAP", anchor="nw", angle=0)
-    w.create_text(320, 17,font=("freemono ", 11, "bold"), text = "XFactory", anchor="nw", angle=0)
+    txt1 = w.create_text(308, 249.5,font=("freemono ", 11, "bold"), text = "BootloaderP1", anchor="nw", angle=0)
+    txt2 =w.create_text(347, 215,font=("freemono ", 11, "bold"), text = "IAP", anchor="nw", angle=0)
+    txt3 =w.create_text(312, 157,font=("freemono ", 11, "bold"), text = "Application", anchor="nw", angle=0)
+    txt4 =w.create_text(308, 118,font=("freemono bold", 11, "bold"), text = "BootloaderP2", anchor="nw", angle=0)
+    txt5 =w.create_text(340, 73,font=("freemono ", 11, "bold"), text = "SWAP", anchor="nw", angle=0)
+    txt6 =w.create_text(320, 17,font=("freemono ", 11, "bold"), text = "XFactory", anchor="nw", angle=0)
 
     iap_text = scrolledtext.ScrolledText(gui,width=58,height=35)
     iap_text.grid(column=0,row=0)
@@ -664,10 +699,10 @@ if __name__ == "__main__":
     S4.place(x = 81, y = 630.5)
     s4_rect = S4.create_rectangle(0,0, 20, 20, fill='#ff0000')
 
-    S5 = Canvas(gui, width = 5, height = 5,bg="#ff0000")
+    S5 = Canvas(gui, width = 5, height = 5,bg="#29434e")
     S5.pack()
     S5.place(x = 720, y = 576)
-    s5_rect = S4.create_rectangle(0,0, 20, 20, fill='#ff0000')
+    s5_rect = S5.create_rectangle(0,0, 20, 20, fill='#ff0000')
 
     gui.geometry('1366x768')
     gui.mainloop()
