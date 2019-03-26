@@ -1,9 +1,7 @@
 
-"""
-Serial IHM Tools for test and validation.
+"""Serial IHM Tools for test and validation.
 @author: myLinux <mastouri.rida@gmail.com>
 """
-
 
 import time
 import threading
@@ -18,29 +16,31 @@ import os
 import tkinter.messagebox
 import os
 repeat = 0
-senario = 0
-myrepeat_2 = 0
+
 path = os.getcwd()+'/Cardio Device History Log/'+'CCW-'+str(datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
 #path = os.getcwd()
 Enable_dgb = 'NO'
+
 __all_dbg = 'NO'
 __error_dbg = 'NO'
 __iap_dbg = 'NO'
 __app_dbg = 'NO'
 __boot_dbg = 'NO'
-__scner_dbg = 'NO'
-__error_display = 'NO'
 serial_check='no'
 # define the access rights
 access_rights = 0o755
 BaudRates = [110, 300, 600, 1200, 2400, 4800, 9600, 14400, 19200,28800, 38400,56000, 57600, 115200, 128000,153600,230400,256000 ,460800,921600]
 
 serial_data = ''
+serial_data = ''
+update_period = 5000
 serial_object = None
 gui = Tk()
 gui.title("CARDIO DEVICE TEST")
+
 gui.configure(bg='#102027')
-dead = 'true'
+
+dead = 'false'
 
 
 def blue_protection():
@@ -80,26 +80,7 @@ def shwo_connect():
     while i<4 :
         i +=1
         blue_protection()
-    S4.itemconfig(s4_rect, fill='#00BF32')
 
-
-def App_status_connected():
-    S1.itemconfig(s1_rect, fill='#00BF32')
-    S2.itemconfig(s2_rect, fill='#FF0000')
-    S3.itemconfig(s3_rect, fill='#FF0000')
-    gui.update()
-
-def IAP_status_connected():
-    S1.itemconfig(s1_rect, fill='#FF0000')
-    S2.itemconfig(s2_rect, fill='#FF0000')
-    S3.itemconfig(s3_rect, fill='#00BF32')
-    gui.update()
-
-def Boot_status_connected():
-    S1.itemconfig(s1_rect, fill='#FF0000')
-    S2.itemconfig(s2_rect, fill='#00BF32')
-    S3.itemconfig(s3_rect, fill='#FF0000')
-    gui.update()
 
 def restart_program():
     python = sys.executable
@@ -109,40 +90,43 @@ def restart_program():
 def connect():
 
     global dead
+    version_ = button_var.get()
+
     global BaudRates
+    print version_
     global serial_object
     global serial_check
-    version_ = button_var.get()
+    dead = 'true'
     port = port_entry.get()
     baud = baud_entry.get()
-
     if (serial_check == 'yes'):
-        tkinter.messagebox.showinfo("INFORMATION", "The Device is connected !!")
+        tkinter.messagebox.showinfo("Alert Message", "You are connected :D !!")
         return
 
+
     if ((baud == '') and (port =='') and (version_ == 0)):
-        tkinter.messagebox.showwarning("WARNING", "Please select your OS and Connection info !!")
+        tkinter.messagebox.showinfo("Alert Message", "Please select your OS and Connection info !!")
         return
 
 
     if (version_ == 0):
-        tkinter.messagebox.showwarning("WARNING", "Please Select your OS !!")
+        tkinter.messagebox.showinfo("Alert Message", "Please Select your OS !!")
         return
 
     if ((baud == '') and (port =='')):
-        tkinter.messagebox.showwarning("WARNING", "Please enter your connection info !!")
+        tkinter.messagebox.showinfo("Alert Message", "Please enter your connection info !!")
         return
 
     if (baud == ''):
-        tkinter.messagebox.showwarning("WARNING", "Please enter your Baud Rates !!")
+        tkinter.messagebox.showinfo("Alert Message", "Please enter your Baud Rates !!")
         return
 
     if (int(baud)not in BaudRates):
-        tkinter.messagebox.showerror("ERROR", "Invalid Baud Rates !!")
+        tkinter.messagebox.showinfo("Alert Message", "Invalid Baud Rates !!")
         return
 
     if (port == ''):
-	tkinter.messagebox.showwarning("WARNING", "Please enter your Port !!")
+	tkinter.messagebox.showinfo("Alert Message", "Please enter your Port !!")
 	return
 
     try:
@@ -151,10 +135,10 @@ def connect():
                 serial_object = serial.Serial('/dev/tty' + str(port), baud,parity=serial.PARITY_NONE,stopbits=serial.STOPBITS_ONE,bytesize=serial.EIGHTBITS,timeout=400)
                 serial_check ='yes'
                 shwo_connect()
-
+                #start_protection()
             except:
                 serial_check ='no'
-                tkinter.messagebox.showerror("ERROR", "Can't Open Specified Port")
+                tkinter.messagebox.showinfo("Alert Message", "Can't Open Specified Port")
 
         elif version_ == 1:
             try:
@@ -163,7 +147,7 @@ def connect():
                 shwo_connect()
             except:
                 serial_check ='no'
-                tkinter.messagebox.showerror("ERROR", "Can't Open Specified Port")
+                tkinter.messagebox.showinfo("Alert Message", "Can't Open Specified Port")
     except ValueError:
         print "Enter Baud and Port"
         return
@@ -171,8 +155,6 @@ def connect():
 
 
 def Start_debug():
-    S5.itemconfig(s5_rect, fill='#FF0000')
-    gui.update()
     global repeat
     global dead
     global serial_object
@@ -183,53 +165,21 @@ def Start_debug():
     global __iap_dbg
     global __app_dbg
     global __boot_dbg
-    global __scner_dbg
-    global __error_display
-    global senario
-    global myrepeat_2
+    if (serial_check == 'yes'):
+        repeat = repeat + 1
+    if ((repeat > 1) and (serial_check == 'yes')) :
+        if (repeat>4):
+            tkinter.messagebox.showinfo("Alert Message", "You must Restart to load new configuration :D ")
+            return
+        tkinter.messagebox.showinfo("Alert Message", "Debug is ON !!! ")
+        return
+    dead = 'true'
     check_log = button_enable_debug.get()
     ALL_DBG  = all_debug.get()
     ERR_DBG  = only_errors.get()
     BOOT_DBG = boot_logging.get()
     IAP_DBG = iap_logging.get()
-    SCEN_DBG =Scenario_logging.get()
     APP_DBG = app_logging.get()
-    senario = select_mode.get()
-    if (serial_check == 'yes'):
-        if((check_log!=4) and((SCEN_DBG==1)or(ALL_DBG==1)or(ERR_DBG==1)or(BOOT_DBG==1)or(IAP_DBG==1))or(APP_DBG==1)):
-            tkinter.messagebox.showwarning("WARNING", "You must Enable the Debug Logging")
-            return
-        if((senario!=3) and (SCEN_DBG==1)):
-            tkinter.messagebox.showwarning("WARNING", "You must set the Scenario Display")
-            return
-        myrepeat_2 = myrepeat_2 + 1
-        if ((senario == 0) and (myrepeat_2 < 2)):
-            tkinter.messagebox.showinfo("INFORMATION", "For more customization you can select the mode of the little screen Display")
-            return
-
-    if (serial_check == 'yes'):
-        repeat = repeat + 1
-
-    if ((repeat > 1) and (serial_check == 'yes')) :
-        if (repeat>3):
-            tkinter.messagebox.showinfo("INFORMATION", "You must Restart to load the new configuration")
-            return
-
-        tkinter.messagebox.showinfo("INFORMATION", "Debug is ON !!!")
-        return
-
-    dead = 'true'
-    if (senario != 0):
-        if ((senario == 3)or(SCEN_DBG==1)):
-            tkinter.messagebox.showinfo("INFORMATION", "You should Learn the use case of The Scenario Test to Succeed The VR")
-            __scner_dbg = 'YES'
-        elif ((senario == 2)or(SCEN_DBG==1)):
-            tkinter.messagebox.showinfo("INFORMATION", "The little D")
-            __error_display = 'YES'
-        t3 = threading.Thread(target = scenario_thread)
-        t3.daemon = True
-        dead = 'false'
-        t3.start()
     try:
         if(check_log == 4 ):
             Enable_dgb = 'YES'
@@ -243,28 +193,25 @@ def Start_debug():
                 __iap_dbg = 'YES'
             if (APP_DBG == 1):
                 __app_dbg = 'YES'
-            if (SCEN_DBG == 1):
-                __scner_dbg = 'YES'
-            if (serial_check == 'yes') :
 
-                t2 = threading.Thread(target = logging_thread)
+            if (serial_check == 'yes') :
+                t2 = threading.Thread(target = update_gui)
                 t2.daemon = True
                 dead = 'false'
                 t2.start()
             else :
-                tkinter.messagebox.showerror("ERROR", "You should connect to cardio device first  !!")
+                tkinter.messagebox.showinfo("Alert Message", "You should connect to cardio device first  !!")
                 return
         if (serial_check == 'yes') :
-            S5.itemconfig(s5_rect, fill='#00BF32')
             t1 = threading.Thread(target = get_data)
             t1.daemon = True
             dead = 'false'
             t1.start()
         else :
-            tkinter.messagebox.showerror("ERROR", "You should connect to cardio device first  !!")
+            tkinter.messagebox.showinfo("Alert Message", "You should connect to cardio device first  !!")
             return
     except ValueError:
-        tkinter.messagebox.showerror("ERROR", "You should connect to cardio device first!!")
+        tkinter.messagebox.showinfo("Alert Message", "You should connect to cardio device first!!")
         return
 
 
@@ -280,12 +227,9 @@ def get_data():
             serial_data = serial_object.readline()
             print serial_data
             if serial_data:
-                queu_2.put(serial_data)
                 if (Enable_dgb == 'YES'):
                     q.put(serial_data)
-                #q.join()
-                if '[IAP]>' in serial_data :
-                    IAP_status_connected()
+                    if '[IAP]>' in serial_data :
                     serial_data = serial_data.replace('[IAP]>', '')
                     #serial_data.lstrip('[IAP]>')
                     if ('Error' in serial_data)or('error' in serial_data)or('Erreur' in serial_data)or('erreur' in serial_data)or('ERROR' in serial_data)or('ERREUR' in serial_data):
@@ -297,7 +241,6 @@ def get_data():
                     iap_text.yview_pickplace("end")
 
                 if '[APP]>' in serial_data :
-                    App_status_connected()
                     serial_data = serial_data.replace('[APP]>', '')
                     #serial_data.lstrip('[APP]>')
                     if ('Error' in serial_data)or('error' in serial_data)or('Erreur' in serial_data)or('erreur' in serial_data)or('ERROR' in serial_data)or('ERREUR' in serial_data):
@@ -308,7 +251,6 @@ def get_data():
                     app_text.yview_pickplace("end")
 
                 if '[BOOT]>' in serial_data :
-                    Boot_status_connected()
                     serial_data = serial_data.replace('[BOOT]>', '')
                     #serial_data.lstrip('[BOOT]>')
                     if ('Error' in serial_data)or('error' in serial_data)or('Erreur' in serial_data)or('erreur' in serial_data)or('ERROR' in serial_data)or('ERREUR' in serial_data):
@@ -325,24 +267,22 @@ def get_data():
 
 
 
-def logging_thread():
+def update_gui():
 
     global serial_data
+    global update_period
     global file_full_debug
     global file_error_only
     global file_iap_only
     global file_boot_only
     global file_app_only
-    global file_Scenario_only
 
     global __all_dbg
     global __error_dbg
     global __iap_dbg
     global __app_dbg
     global __boot_dbg
-    global __scner_dbg
     global dead
-
 
     path_to_log = path
     os.makedirs(path, access_rights)
@@ -356,9 +296,6 @@ def logging_thread():
         file_boot_only = open(path_to_log +'/'+'CCW BOOT Log.txt', "w")
     if (__app_dbg == 'YES'):
         file_app_only = open(path_to_log +'/'+'CCW APP Log.txt', "w")
-    if (__scner_dbg == 'YES'):
-        file_Scenario_only = open(path_to_log +'/'+'CCW SCENARIO VR Log.txt', "w")
-
 
     while(1):
         try:
@@ -392,53 +329,13 @@ def logging_thread():
                         item = item.replace('[BOOT]>', '')
                         file_boot_only.write(item)
                         file_boot_only.flush()
-                if (__scner_dbg == 'YES'):
-                    if '[SCENARIO]>' in item :
-                        item = item.replace('[SCENARIO]>', '')
-                        file_Scenario_only.write(item)
-                        file_Scenario_only.flush()
             if dead == 'true':
                 return
 
         except :
             pass
-
-
-def scenario_thread():
-
-    global __scner_dbg
-    global __error_display
-    global dead
-    print("hhhhhhhhhhhhh\n\r")
-    while(1):
-        try:
-            item_2 = ''
-            item_2 = queu_2.get()
-            if item_2 :
-                if (__scner_dbg == 'YES'):
-                    if '[SCENARIO]>' in item_2 :
-                        print("cccccccccccccccccccccccc\n\r")
-                        item_2 = item_2.replace('[SCENARIO]>', '')
-                        Senario_text.insert(END, item_2)
-
-                        #app_text.insert(END,"\n")
-                        Senario_text.yview_pickplace("end")
-                if (__error_display == 'YES'):
-                    print("dfkjqsdgxfc,ldsgldifxjglf")
-                    if ('Error' in serial_data)or('error' in item_2)or('Erreur' in item_2)or('erreur' in item_2)or('ERROR' in item_2)or('ERREUR' in item_2):
-                        Senario_text.insert(END, item_2)
-                        #app_text.insert(END,"\n")
-                        Senario_text.yview_pickplace("end")
-            if dead == 'true':
-                return
-        except :
-            pass
-
 
 def send():
-    if (serial_check == 'no'):
-        tkinter.messagebox.showerror("ERROR", "You should connect to cardio device first  !!")
-        return
 
     send_data = data_entry.get()
 
@@ -455,14 +352,13 @@ def disconnect():
     global file_iap_only
     global file_boot_only
     global file_app_only
-    global file_Scenario_only
+
     global Enable_dgb
     global __all_dbg
     global __error_dbg
     global __iap_dbg
     global __app_dbg
     global __boot_dbg
-    global __scner_dbg
 
     try:
         serial_object.close()
@@ -480,68 +376,60 @@ def disconnect():
             file_iap_only.close()
         if (__boot_dbg == 'YES'):
             file_boot_only.close()
-        if (__scner_dbg == 'YES'):
-            file_Scenario_only.close()
     gui.quit()
 
 def clear_all():
     boot_text.delete(1.0,END)
     iap_text.delete(1.0,END)
     app_text.delete(1.0,END)
-    Senario_text.delete(1.0,END)
 
-
-def toggleLowDeer():
-    if DeerLowButton.config('relief')[-1] == 'sunken':
-        DeerLowButton.config(relief="raised")
-    else:
-        DeerLowButton.config(relief="sunken")
 
 
 if __name__ == "__main__":
 
     """
-    The Main loop handles all the widget placements for the cardio Debug view.
-    """
+    The main loop consists of all the GUI objects and its placement.
 
+    The Main loop handles all the widget placements.
+
+    """
     #frames
     frame_view_iap = Frame(height = 430, width = 430, bd = 3, relief = 'groove',bg="#808e95").place(x = 7, y = 5)
     frame_view_boot = Frame(height = 430, width = 430, bd = 3, relief = 'groove',bg="#808e95").place(x = 438, y = 5)
     frame_view_app = Frame(height = 430, width = 440, bd = 3, relief = 'groove',bg="#808e95").place(x = 869, y = 5)
-    frame_2 = Frame(height = 156, width = 861, bd = 3, relief = 'groove',bg="#808e95").place(x = 7, y = 552)
+    frame_2 = Frame(height = 150, width = 860, bd = 3, relief = 'groove',bg="#808e95").place(x = 7, y = 558)
 
+    #frame_4 = Frame(height = 150, width = 440, bd = 3, relief = 'groove').place(x = 869, y = 558)
     w = Canvas(gui, width=437.5, height=270,bg="#29434e")  # 808e95
     w.pack()
     w.create_text(260, 85,font=("freemono ", 11, "bold"),text = "BANK-2", anchor="nw", angle=90)
     w.create_text(260, 215,font=("freemono ", 11, "bold"),text = "BANK-1", anchor="nw", angle=90)
+    """
+    These will automatically be drawn on the already packed canvas
+    """
     w.place(x = 869, y = 436)
-
-
-    Label(text = "       INFO  ",bg="#29434e",foreground="white").place(x = 875, y= 445)
-    Label(text = "Product    : STM32L4A6RG",bg="#29434e",foreground="white").place(x = 875, y= 460)
-    Label(text = "Flash size : 1MB",bg="#29434e",foreground="white").place(x = 875, y= 475)
-    Label(text = "RAM size   : 320 KB",bg="#29434e",foreground="white").place(x = 875, y= 490)
-    Label(text = "NB Bank    : 2",bg="#29434e",foreground="white").place(x = 875, y= 505)
-    Label(text = "NB Page    : 256 per Bank",bg="#29434e",foreground="white").place(x = 875, y= 520)
-    Label(text = "Size Page  : 2 KB",bg="#29434e",foreground="white").place(x = 875, y= 535)
-    Label(text = "CORE       : Cortex M4",bg="#29434e",foreground="white").place(x = 875, y= 550)
-    Label(text = "Over Clock : 80 MHZ",bg="#29434e",foreground="white").place(x = 875, y= 565)
-
-    Label(text = "       NOTE",bg="#29434e",foreground="white").place(x = 875, y= 590)
-    Label(text = "This is the code color of the WRP ",bg="#29434e",foreground="white").place(x = 875, y= 605)
-    Label(text = "memory protection visualisation>> ",bg="#29434e",foreground="white").place(x = 875, y= 620)
-    Label(text = "WHITE  : Device is not connected ",bg="#29434e",foreground="white").place(x = 875, y= 635)
-    Label(text = "GREEN  : WRP config Disabled",bg="#29434e",foreground="white").place(x = 875, y= 650)
-    Label(text = "RED    : WRP config Enabled",bg="#29434e",foreground="white").place(x = 875, y= 665)
-
-
     bootPart1_rect = w.create_rectangle(280,240, 437.5, 270, fill='white')
+
     iap_rect = w.create_rectangle(280,200, 437.5, 240, fill='white')
+
     app_rect = w.create_rectangle(280,135, 437.5, 200, fill='white')
+
+
+
     bootPart2_rect = w.create_rectangle(280,115, 437.5, 135, fill='white')
+
     emul_rect = w.create_rectangle(280,113, 437.5, 115, fill='black')
+
     swap_rect = w.create_rectangle(280,50, 437.5, 113, fill='white')
+
     xfactory_rect = w.create_rectangle(280,2, 437.5, 50, fill='white')
+
+    #label_bootPart1 = Label(text = "BootloaderP1",bg="#eeeeee").place(x =1192, y= 685)
+    #label_iap = Label(text = "IAP",bg="#eeeeee").place(x =1220, y= 650)
+    #data_app = Label(text = "Application",bg="#eeeeee").place(x =1193, y= 600)
+    #data_bootPart2 = Label(text = "BootloaderP2",bg="#eeeeee").place(x =1192, y= 553.5)
+    #data_swap = Label(text = "SWAP",bg="#eeeeee").place(x =1215, y= 510)
+    #data_XFACTORY= Label(text = "XFactory",bg="#eeeeee").place(x =1200, y= 458)
 
     w.create_text(308, 249.5,font=("freemono ", 11, "bold"), text = "BootloaderP1", anchor="nw", angle=0)
     w.create_text(347, 215,font=("freemono ", 11, "bold"), text = "IAP", anchor="nw", angle=0)
@@ -549,6 +437,14 @@ if __name__ == "__main__":
     w.create_text(308, 118,font=("freemono bold", 11, "bold"), text = "BootloaderP2", anchor="nw", angle=0)
     w.create_text(340, 73,font=("freemono ", 11, "bold"), text = "SWAP", anchor="nw", angle=0)
     w.create_text(320, 17,font=("freemono ", 11, "bold"), text = "XFactory", anchor="nw", angle=0)
+
+    # 30, 10, 120, 80  Helvetica  'freemono bold'
+    # 280, 350, 50, 150
+    # text = Text(width = 65, height = 15)
+    # text2 = Text(width = 65, height = 15)
+
+
+
 
     iap_text = scrolledtext.ScrolledText(gui,width=58,height=35)
     iap_text.grid(column=0,row=0)
@@ -562,18 +458,16 @@ if __name__ == "__main__":
     boot_text.grid(column=0,row=0)
     boot_text.place(x = 446, y = 10)
 
-    Senario_text = scrolledtext.ScrolledText(gui,width=59,height=10.48,bg="#102027", foreground="yellow")
-    Senario_text.grid(column=0,row=0)
-    Senario_text.place(x = 438, y = 436)
-
     iap_text.tag_config('warning', background="yellow", foreground="red")
     app_text.tag_config('warning', background="yellow", foreground="red")
     boot_text.tag_config('warning', background="yellow", foreground="red")
-    #queu for the transmission data between threads
+    #threads
     q = Queue.Queue()
-    queu_2 = Queue.Queue()
+
+
 
     #Labels
+    data1_ = Label(text = "Command:",bg="#808e95").place(x = 15, y= 660)
     osdata_ = Label(text ="OS :",bg="#808e95").place (x = 10, y = 570)
     setting = Label(text ="Advanced Setting",bg="#808e95").place (x = 420, y = 620)
     baud   = Label(text = "Baud",bg="#808e95").place(x = 100, y = 600)
@@ -581,13 +475,20 @@ if __name__ == "__main__":
     boot_indic = Label(text = "BOOTLOADER DEBUG VIEW",fg = "#eeeeee",font = "Helvetica 16 bold italic",bg="#808e95").place(x = 555, y= 405)
     boot_indic = Label(text = "IAP DEBUG VIEW",fg = "#eeeeee",font = "Helvetica 16 bold italic",bg="#808e95").place(x = 1035, y= 405)
     boot_indic = Label(text = "APPLICATION DEBUG VIEW",fg = "#eeeeee",font = "Helvetica 16 bold italic",bg="#808e95").place(x = 100, y= 405)
-    project_indic = Label(text = " CARDIO DEVICE CCW V1.0.0",fg = "#eeeeee",font = "Helvetica 16 bold italic",bg="#808e95").place(x = 55, y= 665)
 
     #contact = Label(text = "mastouri.rida@gmail.com").place(x = 250, y = 437)
+
+
+    data_entry = Entry(width = 41)
+    data_entry.place(x = 100, y = 684)
+
     baud_entry = Entry(width = 10)
     baud_entry.place(x = 100, y = 624)
+
     port_entry = Entry(width = 10)
     port_entry.place(x = 200, y = 624)
+
+
 
     #radio button
     button_var = IntVar()
@@ -608,25 +509,23 @@ if __name__ == "__main__":
     Checkbutton(gui, text="IAP Logging", variable=iap_logging,bg="#808e95",relief = 'raised').place(x = 550, y = 650)
     app_logging = IntVar()
     Checkbutton(gui, text="Application Logging", variable=app_logging,bg="#808e95",relief = 'raised').place(x = 675, y = 650)
-    Scenario_logging = IntVar()
-    Checkbutton(gui, text="Scenario VR Logging", variable=Scenario_logging,bg="#808e95",relief = 'raised').place(x = 420, y = 675)
 
     #button
+
     connect = Button(text = "Connect", command = connect,relief = 'ridge').place(x = 15, y = 620)
+
     start = Button(text = "Start Debug", command = Start_debug,relief = 'ridge').place(x =625, y = 565)
     disconnect = Button(text = "Disconnect", command = disconnect,relief = 'ridge').place(x =300, y = 620)
-    Restart_prog = Button(text = "Restart", command =restart_program,relief = 'ridge').place(x =321, y = 565)
-    data1_ = Label(text = "Command:",bg="#102027",foreground="white").place(x = 15, y= 492)
-    button1 = Button(text = "Send", command = send, width = 6,relief = 'ridge').place(x = 15, y = 510)
-    data_entry = Entry(width = 44)
-    data_entry.place(x = 100, y = 513)
-    data5_ = Label(text = " Little Screen  ",bg="#102027",foreground="white").place(x = 170, y= 450)
-    data6_ = Label(text = " Display Mode>>",bg="#102027",foreground="white").place(x = 170, y= 470)
-    select_mode = IntVar()
-    nothink    = Radiobutton(text = "  None Display  ", variable = select_mode, value = 1,bg="#808e95",relief = 'raised').place(x = 280, y = 440)
-    error_view = Radiobutton(text = " Error Display  ", variable = select_mode, value = 2,bg="#808e95",relief = 'raised').place(x = 280, y = 463)
-    test_view  = Radiobutton(text = "Scenario Display", variable = select_mode, value = 3,bg="#808e95",relief = 'raised').place(x = 280, y = 485)
 
+    Restart_prog = Button(text = "Restart", command =restart_program,relief = 'ridge').place(x =321, y = 565)
+    button1 = Button(text = "Send", command = send, width = 6,relief = 'ridge').place(x = 15, y = 680)
+
+    # clear_iap = Button(text = "Clear", command = clearIAP, width = 2,relief = 'ridge').place(x = 15, y = 405)
+    # clear_app = Button(text = "Clear", command = clearAPP, width = 2,relief = 'ridge').place(x = 446, y = 405)
+    # clear_boot = Button(text = "Clear", command = clearBOOT, width = 2,relief = 'ridge').place(x = 877, y = 405)
+
+    # btn = Button(gui,text = "Clear", command =  lambda: iap_text.delete(1.0,END), width = 2,relief = 'ridge').place(x = 15, y = 405)
+    # btn.pack()
     clear_app = Button(gui, text='Clear',width = 2,relief = 'ridge', command=lambda: app_text.delete(1.0,END))
     clear_app.pack()
     clear_app.place(x = 15, y = 405)
@@ -642,32 +541,17 @@ if __name__ == "__main__":
     clear_all = Button(gui, text='Clear All Window',width = 14,relief = 'ridge', command= clear_all)
     clear_all.pack()
     clear_all.place(x = 733, y = 565)
+    #mainloop
 
-    S1 = Canvas(gui, width = 8, height = 8,bg="#29434e")
-    S1.pack()
-    S1.place(x = 330 , y = 412.5)
 
-    s1_rect = S1.create_rectangle(0,0, 20, 20, fill='#29434e')
-
-    S2 = Canvas(gui, width = 8, height = 8,bg="#29434e")
-    S2.pack()
-    S2.place(x = 775 , y = 412.5)
-    s2_rect = S2.create_rectangle(0,0, 20, 20, fill='#29434e')
-
-    S3 = Canvas(gui, width = 8, height = 8,bg="#29434e")
-    S3.pack()
-    S3.place(x = 1185 , y = 412.5)
-    s3_rect = S3.create_rectangle(0,0, 20, 20, fill='#29434e')
-
-    S4 = Canvas(gui, width = 5, height = 5,bg="#29434e")
-    S4.pack()
-    S4.place(x = 81, y = 630.5)
-    s4_rect = S4.create_rectangle(0,0, 20, 20, fill='#ff0000')
-
-    S5 = Canvas(gui, width = 5, height = 5,bg="#ff0000")
-    S5.pack()
-    S5.place(x = 720, y = 576)
-    s5_rect = S4.create_rectangle(0,0, 20, 20, fill='#ff0000')
 
     gui.geometry('1366x768')
+
+    # canvas = Canvas(gui, width = 100, height = 100)
+    # canvas.pack()
+    # myrectangle = canvas.create_rectangle(100, 200, 400, 400, fill='black')
+    # canvas.place(x = 15, y = 510)
+    # canvas.itemconfig(myrectangle, fill='red')
+    # gui.update()
+
     gui.mainloop()
