@@ -216,8 +216,6 @@ def connect():
         print "Enter Baud and Port"
         return
 
-
-
 def Start_debug():
 
     global repeat
@@ -331,7 +329,6 @@ def get_data():
                 queu_2.put(serial_data)
                 if (Enable_dgb == 'YES'):
                     q.put(serial_data)
-                #q.join()
                 if '[IAP]>' in serial_data :
                     IAP_status_connected()
                     protection_modeB()
@@ -339,7 +336,7 @@ def get_data():
                     #serial_data.lstrip('[IAP]>')
                     if ('Error' in serial_data)or('error' in serial_data)or('Erreur' in serial_data)or('erreur' in serial_data)or('ERROR' in serial_data)or('ERREUR' in serial_data):
                         iap_text.insert(END, serial_data,'warning')
-                        #qq.put(serial_data)
+
                     else :
                         iap_text.insert(END, serial_data)
                     #iap_text.insert(END,"\n")
@@ -372,9 +369,6 @@ def get_data():
         except TypeError:
             pass
 
-
-
-
 def logging_thread():
 
     global serial_data
@@ -384,7 +378,6 @@ def logging_thread():
     global file_boot_only
     global file_app_only
     global file_Scenario_only
-
     global __all_dbg
     global __error_dbg
     global __iap_dbg
@@ -392,10 +385,9 @@ def logging_thread():
     global __boot_dbg
     global __scner_dbg
     global dead
-
-
     path_to_log = path
     os.makedirs(path, access_rights)
+
     if (__all_dbg == 'YES'):
         file_full_debug = open(path_to_log +'/'+'CCW Full Log.txt', "w")
     if (__error_dbg == 'YES'):
@@ -408,7 +400,6 @@ def logging_thread():
         file_app_only = open(path_to_log +'/'+'CCW APP Log.txt', "w")
     if (__scner_dbg == 'YES'):
         file_Scenario_only = open(path_to_log +'/'+'CCW SCENARIO VR Log.txt', "w")
-
 
     while(1):
         try:
@@ -459,7 +450,6 @@ def scenario_thread():
     global __scner_dbg
     global __error_display
     global dead
-    print("hhhhhhhhhhhhh\n\r")
     while(1):
         try:
             item_2 = ''
@@ -467,17 +457,12 @@ def scenario_thread():
             if item_2 :
                 if (__scner_dbg == 'YES'):
                     if '[SCENARIO]>' in item_2 :
-                        print("cccccccccccccccccccccccc\n\r")
                         item_2 = item_2.replace('[SCENARIO]>', '')
                         Senario_text.insert(END, item_2)
-
-                        #app_text.insert(END,"\n")
                         Senario_text.yview_pickplace("end")
                 if (__error_display == 'YES'):
-                    print("dfkjqsdgxfc,ldsgldifxjglf")
                     if ('Error' in serial_data)or('error' in item_2)or('Erreur' in item_2)or('erreur' in item_2)or('ERROR' in item_2)or('ERREUR' in item_2):
                         Senario_text.insert(END, item_2)
-                        #app_text.insert(END,"\n")
                         Senario_text.yview_pickplace("end")
             if dead == 'true':
                 return
@@ -496,8 +481,6 @@ def send():
         print "Sent Nothing"
 
     serial_object.write(send_data)
-
-
 
 def disconnect():
     global file_full_debug
@@ -540,7 +523,6 @@ def clear_all():
     app_text.delete(1.0,END)
     Senario_text.delete(1.0,END)
 
-
 def toggleLowDeer():
     if DeerLowButton.config('relief')[-1] == 'sunken':
         DeerLowButton.config(relief="raised")
@@ -562,13 +544,9 @@ if __name__ == "__main__":
 
     w = Canvas(gui, width=437.5, height=270,bg="#29434e")  # 808e95
     w.pack()
-    w.create_text(260, 85,font=("freemono ", 11, "bold"),text = "BANK-2", anchor="nw", angle=90)
-    w.create_text(260, 215,font=("freemono ", 11, "bold"),text = "BANK-1", anchor="nw", angle=90)
+    w.create_text(260, 85,font=("freemono ", 11, "bold"),text = "BANK-2", fill='white', anchor="nw", angle=90)
+    w.create_text(260, 215,font=("freemono ", 11, "bold"),text = "BANK-1",  fill='white',anchor="nw", angle=90)
     w.place(x = 869, y = 436)
-
-
-
-
 
     bootPart1_rect = w.create_rectangle(280,240, 437.5, 270, fill='white')
     iap_rect = w.create_rectangle(280,200, 437.5, 240, fill='white')
