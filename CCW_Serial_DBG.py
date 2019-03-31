@@ -1,7 +1,11 @@
 
 """
-Serial IHM Tools for test and validation.
-@author: myLinux <mastouri.rida@gmail.com>
+@file  :  CCW_Serial_DBG.py
+@brief :  Serial IHM Tools for test and validation.
+ ###### myLinux <mastouri.rida@gmail.com> ######
+@AUTHOR :    Ridha MASTOURI       START DATE :    19 Mar 2019
+@version : 1.0.0
+@Control Version : Linux Local Git
 """
 
 

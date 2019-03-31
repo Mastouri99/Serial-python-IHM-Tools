@@ -1,0 +1,321 @@
+[APP]>=============================================
+[APP]>=============================================
+[APP]>=============================================
+[APP]>========= APP  FIRMWARE  ENTRYY  ============
+[APP]>=============================================
+[APP]>=============================================
+[APP]> erreur occured  ON APPLIC
+erreur occured 
+[IAP]>IAP STOP ...  !
+[SCENARIO]>TEST TEST TEST TEST TEST 
+[SCENARIO]>===== THIS IS MY TEST SCENARIO  =====
+[SCENARIO]>test test test test test test n[SCENARIO]>scenario succes
+[IAP]>==========TEST MESSS FOR IAP======
+[IAP]>=============================================
+[BOOT]>========= SOFIA BOOTLODER ENTRYY  ===========
+[BOOT]>=============================================
+===========HELLLLO============
+==========TEST NOT SPRINT===========================
+[IAP]>========= IAP  FIRMWARE  ENTRYY  ============
+[IAP]>=============================================
+[IAP]>error occured 
+Error occured 
+[BOOT]>error occured  ON BOOT
+[APP]>=============================================
+[APP]>=============================================
+[APP]>=============================================
+[APP]>========= APP  FIRMWARE  ENTRYY  ============
+[APP]>=============================================
+[APP]>=============================================
+[APP]> erreur occured  ON APPLIC
+erreur occured 
+[IAP]>IAP STOP ...  !
+[SCENARIO]>TEST TEST TEST TEST TEST 
+[SCENARIO]>===== THIS IS MY TEST SCENARIO  =====
+[SCENARIO]>test test test test test test n[SCENARIO]>scenario succes
+[IAP]>==========TEST MESSS FOR IAP======
+[IAP]>=============================================
+[BOOT]>========= SOFIA BOOTLODER ENTRYY  ===========
+[BOOT]>=============================================
+===========HELLLLO============
+==========TEST NOT SPRINT===========================
+[IAP]>========= IAP  FIRMWARE  ENTRYY  ============
+[IAP]>=============================================
+[IAP]>error occured 
+Error occured 
+[BOOT]>error occured  ON BOOT
+[APP]>=============================================
+[APP]>=============================================
+[APP]>=============================================
+[APP]>========= APP  FIRMWARE  ENTRYY  ============
+[APP]>=============================================
+[APP]>=============================================
+[APP]> erreur occured  ON APPLIC
+erreur occured 
+[IAP]>IAP STOP ...  !
+[SCENARIO]>TEST TEST TEST TEST TEST 
+[SCENARIO]>===== THIS IS MY TEST SCENARIO  =====
+[SCENARIO]>test test test test test test n[SCENARIO]>scenario succes
+[IAP]>==========TEST MESSS FOR IAP======
+[IAP]>=============================================
+[BOOT]>========= SOFIA BOOTLODER ENTRYY  ===========
+[BOOT]>=============================================
+===========HELLLLO============
+==========TEST NOT SPRINT===========================
+[IAP]>========= IAP  FIRMWARE  ENTRYY  ============
+[IAP]>=============================================
+[IAP]>error occured 
+Error occured 
+[BOOT]>error occured  ON BOOT
+[APP]>=============================================
+[APP]>=============================================
+[APP]>=============================================
+[APP]>========= APP  FIRMWARE  ENTRYY  ============
+[APP]>=============================================
+[APP]>=============================================
+[APP]> erreur occured  ON APPLIC
+erreur occured 
+[IAP]>IAP STOP ...  !
+[SCENARIO]>TEST TEST TEST TEST TEST 
+[SCENARIO]>===== THIS IS MY TEST SCENARIO  =====
+[SCENARIO]>test test test test test test n[SCENARIO]>scenario succes
+[IAP]>==========TEST MESSS FOR IAP======
+[IAP]>=============================================
+[BOOT]>========= SOFIA BOOTLODER ENTRYY  ===========
+[BOOT]>=============================================
+===========HELLLLO============
+==========TEST NOT SPRINT===========================
+[IAP]>========= IAP  FIRMWARE  ENTRYY  ============
+[IAP]>=============================================
+[IAP]>error occured 
+Error occured 
+[BOOT]>error occured  ON BOOT
+[APP]>=============================================
+[APP]>=============================================
+[APP]>=============================================
+[APP]>========= APP  FIRMWARE  ENTRYY  ============
+[APP]>=============================================
+[APP]>=============================================
+[APP]> erreur occured  ON APPLIC
+erreur occured 
+[IAP]>IAP STOP ...  !
+[SCENARIO]>TEST TEST TEST TEST TEST 
+[SCENARIO]>===== THIS IS MY TEST SCENARIO  =====
+[SCENARIO]>test test test test test test n[SCENARIO]>scenario succes
+[IAP]>==========TEST MESSS FOR IAP======
+[IAP]>=============================================
+[BOOT]>========= SOFIA BOOTLODER ENTRYY  ===========
+[BOOT]>=============================================
+===========HELLLLO============
+==========TEST NOT SPRINT===========================
+[IAP]>========= IAP  FIRMWARE  ENTRYY  ============
+[IAP]>=============================================
+[IAP]>error occured 
+Error occured 
+[BOOT]>error occured  ON BOOT
+[APP]>=============================================
+[APP]>=============================================
+[APP]>=============================================
+[APP]>========= APP  FIRMWARE  ENTRYY  ============
+[APP]>=============================================
+[APP]>=============================================
+[APP]> erreur occured  ON APPLIC
+erreur occured 
+[IAP]>IAP STOP ...  !
+[SCENARIO]>TEST TEST TEST TEST TEST 
+[SCENARIO]>===== THIS IS MY TEST SCENARIO  =====
+[SCENARIO]>test test test test test test n[SCENARIO]>scenario succes
+[IAP]>==========TEST MESSS FOR IAP======
+[IAP]>=============================================
+[BOOT]>========= SOFIA BOOTLODER ENTRYY  ===========
+[BOOT]>=============================================
+===========HELLLLO============
+==========TEST NOT SPRINT===========================
+[IAP]>========= IAP  FIRMWARE  ENTRYY  ============
+[IAP]>=============================================
+[IAP]>error occured 
+Error occured 
+[BOOT]>error occured  ON BOOT
+[APP]>=============================================
+[APP]>=============================================
+[APP]>=============================================
+[APP]>========= APP  FIRMWARE  ENTRYY  ============
+[APP]>=============================================
+[APP]>=============================================
+[APP]> erreur occured  ON APPLIC
+erreur occured 
+[IAP]>IAP STOP ...  !
+[SCENARIO]>TEST TEST TEST TEST TEST 
+[SCENARIO]>===== THIS IS MY TEST SCENARIO  =====
+[SCENARIO]>test test test test test test n[SCENARIO]>scenario succes
+[IAP]>==========TEST MESSS FOR IAP======
+[IAP]>=============================================
+[BOOT]>========= SOFIA BOOTLODER ENTRYY  ===========
+[BOOT]>=============================================
+===========HELLLLO============
+==========TEST NOT SPRINT===========================
+[IAP]>========= IAP  FIRMWARE  ENTRYY  ============
+[IAP]>=============================================
+[IAP]>error occured 
+Error occured 
+[BOOT]>error occured  ON BOOT
+[APP]>=============================================
+[APP]>=============================================
+[APP]>=============================================
+[APP]>========= APP  FIRMWARE  ENTRYY  ============
+[APP]>=============================================
+[APP]>=============================================
+[APP]> erreur occured  ON APPLIC
+erreur occured 
+[IAP]>IAP STOP ...  !
+[SCENARIO]>TEST TEST TEST TEST TEST 
+[SCENARIO]>===== THIS IS MY TEST SCENARIO  =====
+[SCENARIO]>test test test test test test n[SCENARIO]>scenario succes
+[IAP]>==========TEST MESSS FOR IAP======
+[IAP]>=============================================
+[BOOT]>========= SOFIA BOOTLODER ENTRYY  ===========
+[BOOT]>=============================================
+===========HELLLLO============
+==========TEST NOT SPRINT===========================
+[IAP]>========= IAP  FIRMWARE  ENTRYY  ============
+[IAP]>=============================================
+[IAP]>error occured 
+Error occured 
+[BOOT]>error occured  ON BOOT
+[APP]>=============================================
+[APP]>=============================================
+[APP]>=============================================
+[APP]>========= APP  FIRMWARE  ENTRYY  ============
+[APP]>=============================================
+[APP]>=============================================
+[APP]> erreur occured  ON APPLIC
+erreur occured 
+[IAP]>IAP STOP ...  !
+[SCENARIO]>TEST TEST TEST TEST TEST 
+[SCENARIO]>===== THIS IS MY TEST SCENARIO  =====
+[SCENARIO]>test test test test test test n[SCENARIO]>scenario succes
+[IAP]>==========TEST MESSS FOR IAP======
+[IAP]>=============================================
+[BOOT]>========= SOFIA BOOTLODER ENTRYY  ===========
+[BOOT]>=============================================
+===========HELLLLO============
+==========TEST NOT SPRINT===========================
+[IAP]>========= IAP  FIRMWARE  ENTRYY  ============
+[IAP]>=============================================
+[IAP]>error occured 
+Error occured 
+[BOOT]>error occured  ON BOOT
+[APP]>=============================================
+[APP]>=============================================
+[APP]>=============================================
+[APP]>========= APP  FIRMWARE  ENTRYY  ============
+[APP]>=============================================
+[APP]>=============================================
+[APP]> erreur occured  ON APPLIC
+erreur occured 
+[IAP]>IAP STOP ...  !
+[SCENARIO]>TEST TEST TEST TEST TEST 
+[SCENARIO]>===== THIS IS MY TEST SCENARIO  =====
+[SCENARIO]>test test test test test test n[SCENARIO]>scenario succes
+[IAP]>==========TEST MESSS FOR IAP======
+[IAP]>=============================================
+[BOOT]>========= SOFIA BOOTLODER ENTRYY  ===========
+[BOOT]>=============================================
+===========HELLLLO============
+==========TEST NOT SPRINT===========================
+[IAP]>========= IAP  FIRMWARE  ENTRYY  ============
+[IAP]>=============================================
+[IAP]>error occured 
+Error occured 
+[BOOT]>error occured  ON BOOT
+[APP]>=============================================
+[APP]>=============================================
+[APP]>=============================================
+[APP]>========= APP  FIRMWARE  ENTRYY  ============
+[APP]>=============================================
+[APP]>=============================================
+[APP]> erreur occured  ON APPLIC
+erreur occured 
+[IAP]>IAP STOP ...  !
+[SCENARIO]>TEST TEST TEST TEST TEST 
+[SCENARIO]>===== THIS IS MY TEST SCENARIO  =====
+[SCENARIO]>test test test test test test n[SCENARIO]>scenario succes
+[IAP]>==========TEST MESSS FOR IAP======
+[IAP]>=============================================
+[BOOT]>========= SOFIA BOOTLODER ENTRYY  ===========
+[BOOT]>=============================================
+===========HELLLLO============
+==========TEST NOT SPRINT===========================
+[IAP]>========= IAP  FIRMWARE  ENTRYY  ============
+[IAP]>=============================================
+[IAP]>error occured 
+Error occured 
+[BOOT]>error occured  ON BOOT
+[APP]>=============================================
+[APP]>=============================================
+[APP]>=============================================
+[APP]>========= APP  FIRMWARE  ENTRYY  ============
+[APP]>=============================================
+[APP]>=============================================
+[APP]> erreur occured  ON APPLIC
+erreur occured 
+[IAP]>IAP STOP ...  !
+[SCENARIO]>TEST TEST TEST TEST TEST 
+[SCENARIO]>===== THIS IS MY TEST SCENARIO  =====
+[SCENARIO]>test test test test test test n[SCENARIO]>scenario succes
+[IAP]>==========TEST MESSS FOR IAP======
+[IAP]>=============================================
+[BOOT]>========= SOFIA BOOTLODER ENTRYY  ===========
+[BOOT]>=============================================
+===========HELLLLO============
+==========TEST NOT SPRINT===========================
+[IAP]>========= IAP  FIRMWARE  ENTRYY  ============
+[IAP]>=============================================
+[IAP]>error occured 
+Error occured 
+[BOOT]>error occured  ON BOOT
+[APP]>=============================================
+[APP]>=============================================
+[APP]>=============================================
+[APP]>========= APP  FIRMWARE  ENTRYY  ============
+[APP]>=============================================
+[APP]>=============================================
+[APP]> erreur occured  ON APPLIC
+erreur occured 
+[IAP]>IAP STOP ...  !
+[SCENARIO]>TEST TEST TEST TEST TEST 
+[SCENARIO]>===== THIS IS MY TEST SCENARIO  =====
+[SCENARIO]>test test test test test test n[SCENARIO]>scenario succes
+[IAP]>==========TEST MESSS FOR IAP======
+[IAP]>=============================================
+[BOOT]>========= SOFIA BOOTLODER ENTRYY  ===========
+[BOOT]>=============================================
+===========HELLLLO============
+==========TEST NOT SPRINT===========================
+[IAP]>========= IAP  FIRMWARE  ENTRYY  ============
+[IAP]>=============================================
+[IAP]>error occured 
+Error occured 
+[BOOT]>error occured  ON BOOT
+[APP]>=============================================
+[APP]>=============================================
+[APP]>=============================================
+[APP]>========= APP  FIRMWARE  ENTRYY  ============
+[APP]>=============================================
+[APP]>=============================================
+[APP]> erreur occured  ON APPLIC
+erreur occured 
+[IAP]>IAP STOP ...  !
+[SCENARIO]>TEST TEST TEST TEST TEST 
+[SCENARIO]>===== THIS IS MY TEST SCENARIO  =====
+[SCENARIO]>test test test test test test n[SCENARIO]>scenario succes
+[IAP]>==========TEST MESSS FOR IAP======
+[IAP]>=============================================
+[BOOT]>========= SOFIA BOOTLODER ENTRYY  ===========
+[BOOT]>=============================================
+===========HELLLLO============
+==========TEST NOT SPRINT===========================
+[IAP]>========= IAP  FIRMWARE  ENTRYY  ============
+[IAP]>=============================================
+[IAP]>error occured 
+Error occured 
